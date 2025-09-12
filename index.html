@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff7f00;
+            --primary-light: #ffa64d;
+            --primary-dark: #e67300;
+            --secondary-color: #ffffff;
+            --accent-color: #ffb366;
+            --text-color: #333333;
+            --light-color: #f8f9fa;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 127, 0, 0.2);
+            --glass-shadow: rgba(255, 127, 0, 0.15);
+            --placeholder-color: #a0a0a0; /* رنگ کمرنگ برای placeholder */
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffd9b3 0%, #ffb366 100%);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+        
+        .container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: 0 12px 40px var(--glass-shadow);
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid var(--glass-border);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .header h1 {
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            font-size: 32px;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-light), var(--primary-dark));
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 16px;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #ffd9b3;
+            border-radius: 12px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s;
+            font-family: inherit;
+            background-color: var(--secondary-color);
+        }
+        
+        input[type="text"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 127, 0, 0.2);
+        }
+        
+        /* استایل placeholder برای مرورگرهای مختلف */
+        input[type="text"]::placeholder {
+            color: var(--placeholder-color);
+            opacity: 0.8;
+        }
+        
+        input[type="text"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: var(--placeholder-color);
+            opacity: 0.8;
+        }
+        
+        input[type="text"]::-moz-placeholder { /* Firefox 19+ */
+            color: var(--placeholder-color);
+            opacity: 0.8;
+        }
+        
+        input[type="text"]:-ms-input-placeholder { /* IE 10+ */
+            color: var(--placeholder-color);
+            opacity: 0.8;
+        }
+        
+        input[type="text"]:-moz-placeholder { /* Firefox 18- */
+            color: var(--placeholder-color);
+            opacity: 0.8;
+        }
+        
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 127, 0, 0.3);
+        }
+        
+        button:hover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 127, 0, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 12px;
+            background-color: var(--light-color);
+            display: none;
+            animation: fadeIn 0.5s ease;
+            border: 1px solid #ffd9b3;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .success {
+            display: block;
+            border-right: 5px solid var(--primary-color);
+        }
+        
+        .error {
+            display: block;
+            border-right: 5px solid #ff6666;
+            background-color: #ffeeee;
+        }
+        
+        .warning {
+            display: block;
+            border-right: 5px solid #ffaa44;
+            background-color: #fff6e6;
+        }
+        
+        .glass-link {
+            word-break: break-all;
+            padding: 15px;
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 16px;
+            border: 1px dashed var(--primary-light);
+            direction: ltr;
+            text-align: left;
+            color: var(--primary-dark);
+        }
+        
+        .copy-btn {
+            margin-top: 15px;
+            background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--primary-dark);
+            font-size: 14px;
+        }
+        
+        .footer i {
+            color: #ff6666;
+        }
+        
+        .more-tools-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-light) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(255, 127, 0, 0.25);
+        }
+        
+        .more-tools-btn:hover {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent-color) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 127, 0, 0.35);
+        }
+        
+        .more-tools-btn i {
+            margin-left: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 26px;
+            }
+            
+            input[type="text"] {
+                padding: 12px 12px 12px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ابزارک لینک‌ حبابی</h1>
+        </div>
+        
+        <div class="form-group">
+            <label for="public-link">لینک عمومی ایتا:</label>
+            <div class="input-with-icon">
+                <i class="fas fa-link"></i>
+                <input type="text" id="public-link" placeholder="https://eitaa.com/Ariya_academy">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="btn-text">متن مورد نظر :</label>
+            <div class="input-with-icon">
+                <i class="fas fa-font"></i>
+                <input type="text" id="btn-text" placeholder="مثلا دانلود فایل">
+            </div>
+        </div>
+        
+        <button id="generate-btn" onclick="generateGlassLink()">
+            <i class="fas fa-magic"></i> ساخت لینک حبابی
+        </button>
+        
+        <div id="result" class="result"></div>
+        
+        <a href="https://eitaa.com/Ariya_academy" class="more-tools-btn" target="_blank">
+            <i class="fas fa-plus"></i> ابزارک های بیشتر
+        </a>
+
+        <div class="footer">
+            <p>ابزار ساخت لینک شیشه‌ای/ حبابی ایتا <i class="fas fa-heart"></i></p>
+        </div>
+    </div>
+
+    <script>
+        // تابع برای ساخت لینک شیشه ای
+        function generateGlassLink() {
+            const publicLink = document.getElementById('public-link').value.trim();
+            const btnText = document.getElementById('btn-text').value.trim();
+            const resultDiv = document.getElementById('result');
+            
+            // پاک کردن نتیجه قبلی
+            resultDiv.className = 'result';
+            resultDiv.innerHTML = '';
+            
+            // بررسی اینکه فیلدها خالی نباشند
+            if (!publicLink || !btnText) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = '<p>لطفاً هر دو فیلد را پر کنید.</p>';
+                return;
+            }
+            
+            // بررسی اینکه لینک با http یا https شروع شود
+            if (!publicLink.startsWith('http://') && !publicLink.startsWith('https://')) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = '<p>لینک باید با http:// یا https:// شروع شود.</p>';
+                return;
+            }
+            
+            // بررسی اینکه لینک مربوط به ایتا است
+            if (!publicLink.includes('eitaa.com')) {
+                resultDiv.className = 'result warning';
+                resultDiv.innerHTML = '<p>این لینک مربوط به ایتا نیست. لینک باید از دامنه eitaa.com باشد.</p>';
+            }
+            
+            // بررسی اینکه لینک عمومی است یا خصوصی
+            const linkCheckResult = checkEitaaLinkType(publicLink);
+            
+            if (linkCheckResult.isPrivate) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `
+                    <p>در حال حاضر ایتا قادر به حبابی کردن لینک های خصوصی و گپ‌ نمی‌باشد</p>
+                    <p>لطفاً یک لینک عمومی وارد کنید...</p>
+                `;
+                return;
+            }
+            
+            // ساخت لینک شیشه ای - تبدیل فاصله به نقطه (بدون استفاده از encodeURIComponent)
+            const transformedText = btnText.replace(/\s+/g, '.');
+            const glassLink = `${publicLink}/_app?btn=${transformedText}`;
+            
+            // نمایش نتیجه
+            resultDiv.className = 'result success';
+            resultDiv.innerHTML = `
+                <div class="glass-link">${glassLink}</div>
+                <button class="copy-btn" onclick="copyToClipboard('${glassLink}')">
+                    <i class="fas fa-copy"></i> کپی لینک
+                </button>
+            `;
+        }
+        
+        // تابع برای تشخیص نوع لینک ایتا (عمومی یا خصوصی)
+        function checkEitaaLinkType(link) {
+            // بررسی لینک های خصوصی بر اساس الگوهای شناخته شده
+            const privatePatterns = [
+                {
+                    pattern: /\/joinchat\//i,
+                    reason: "حاوی /joinchat/ است که نشان‌دهنده لینک خصوصی است"
+                },
+                {
+                    pattern: /\/\d{5,}\/\d+/i,
+                    reason: "حاوی اعداد طولانی است که نشان‌دهنده لینک خصوصی است"
+                },
+                {
+                    pattern: /\/\d{8,}\//i,
+                    reason: "حاوی اعداد طولانی است که نشان‌دهنده لینک خصوصی است"
+                },
+                {
+                    pattern: /\/private\//i,
+                    reason: "حاوی کلمه private است که نشان‌دهنده لینک خصوصی است"
+                },
+                {
+                    pattern: /\/invite\//i,
+                    reason: "حاوی کلمه invite است که نشان‌دهنده لینک دعوت خصوصی است"
+                },
+                {
+                    pattern: /[?&]token=/i,
+                    reason: "حاوی پارامتر token است که نشان‌دهنده لینک خصوصی است"
+                },
+                {
+                    pattern: /[?&]key=/i,
+                    reason: "حاوی پارامتر key است که نشان‌دهنده لینک خصوصی است"
+                }
+            ];
+            
+            for (const patternInfo of privatePatterns) {
+                if (patternInfo.pattern.test(link)) {
+                    return {
+                        isPrivate: true,
+                        reason: patternInfo.reason
+                    };
+                }
+            }
+            
+            // اگر هیچکدام از الگوهای بالا صدق نکرد، به عنوان لینک عمومی در نظر گرفته می‌شود
+            return {
+                isPrivate: false,
+                reason: "لینک عمومی معتبر است"
+            };
+        }
+        
+        // تابع برای کپی کردن لینک به کلیپ بورد
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            
+            alert('لینک با موفقیت کپی شد!');
+        }
+    </script>
+</body>
+</html>
