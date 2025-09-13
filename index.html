@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ربات در دست تعمیر</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
@@ -21,13 +19,14 @@
             align-items: center;
             overflow: hidden;
             padding: 15px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         .container {
             text-align: center;
             width: 100%;
             max-width: 95%;
-            padding: 25px 20px;
+            padding: 40px 20px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 16px;
@@ -58,7 +57,7 @@
         
         .icon {
             font-size: 60px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             color: #0bcbd4;
             text-shadow: 0 0 15px rgba(11, 203, 212, 0.7);
             animation: pulse 2s infinite;
@@ -71,13 +70,11 @@
         }
         
         .blinking-text {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
-            line-height: 1.6;
-            margin-bottom: 20px;
+            line-height: 1.8;
             animation: blink 3s infinite;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-            padding: 0 10px;
         }
         
         @keyframes blink {
@@ -91,106 +88,27 @@
             }
         }
         
-        .message {
-            font-size: 18px;
-            color: #e0f7fa;
-            line-height: 1.8;
-            margin-bottom: 25px;
-            text-shadow: 0 0 8px rgba(224, 247, 250, 0.5);
-            padding: 0 5px;
-        }
-        
-        .progress-container {
-            width: 100%;
-            height: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-            margin: 25px 0;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
-        }
-        
-        .progress-bar {
-            height: 100%;
-            width: 65%;
-            background: linear-gradient(90deg, #00ffaa, #00ccff);
-            border-radius: 8px;
-            animation: progress 2s infinite alternate;
-        }
-        
-        @keyframes progress {
-            0% { width: 60%; }
-            100% { width: 70%; }
-        }
-        
-        .dots {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        
-        .dot {
-            width: 16px;
-            height: 16px;
-            margin: 0 8px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #00ffaa, #00ccff);
-            animation: bounce 1.5s infinite ease-in-out;
-            box-shadow: 0 0 10px rgba(0, 204, 255, 0.7);
-        }
-        
-        .dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        
-        .dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-15px);
-            }
-        }
-        
         /* بهبود برای صفحه‌نمایی عمودی */
         @media (max-height: 700px) {
             .container {
-                padding: 20px 15px;
+                padding: 30px 15px;
             }
             
             .icon {
                 font-size: 50px;
-                margin-bottom: 15px;
-            }
-            
-            .blinking-text {
-                font-size: 24px;
-                margin-bottom: 15px;
-            }
-            
-            .message {
-                font-size: 16px;
                 margin-bottom: 20px;
             }
             
-            .progress-container {
-                margin: 15px 0;
+            .blinking-text {
+                font-size: 28px;
             }
         }
         
         /* بهبود برای صفحه‌نمایی افقی */
         @media (max-width: 768px) and (orientation: landscape) {
-            body {
-                padding: 10px;
-            }
-            
             .container {
                 max-width: 90%;
-                padding: 20px 15px;
+                padding: 25px 15px;
             }
             
             .icon {
@@ -199,426 +117,19 @@
             }
             
             .blinking-text {
-                font-size: 22px;
-                margin-bottom: 15px;
-            }
-            
-            .message {
-                font-size: 16px;
-                margin-bottom: 15px;
-            }
-            
-            .progress-container {
-                height: 14px;
-                margin: 15px 0;
-            }
-            
-            .dot {
-                width: 14px;
-                height: 14px;
-            }
-        }
-        
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        
-        .particle {
-            position: absolute;
-            background: linear-gradient(45deg, #00ffaa, #00ccff);
-            border-radius: 50%;
-            opacity: 0.5;
-            animation: float 10s infinite linear;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.5;
-            }
-            90% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="particles" id="particles"></div>
-    
-    <div class="container">
-        <div class="icon">
-            <i class="fas fa-tools"></i>
-        </div>
-        
-        <div class="blinking-text">
-            ربات در دست تعمیر<br>
-            لطفا شکیبا باشید
-        </div>
-        
-        <div class="message">
-            تیم فنی ما در حال به‌روزرسانی و بهبود سرویس ربات می‌باشد.<br>
-            این فرآیند ممکن است چند ساعت به طول بیانجامد.
-        </div>
-        
-        <div class="progress-container">
-            <div class="progress-bar"></div>
-        </div>
-        
-        <div class="dots">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-        </div>
-    </div>
-
-    <script>
-        // ایجاد ذرات شناور
-        document.addEventListener('DOMContentLoaded', function() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 20;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                const size = Math.random() * 15 + 5;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                
-                particle.style.animationDuration = `${Math.random() * 15 + 5}s`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
-        });
-    </script>
-</body>
-</html>            overflow: hidden;
-        }
-        
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(7, 94, 84, 0.1), rgba(10, 186, 181, 0.2));
-            transform: rotate(-45deg);
-            z-index: -1;
-            animation: shine 6s infinite;
-        }
-        
-        @keyframes shine {
-            0% { left: -100%; }
-            20% { left: 100%; }
-            100% { left: 100%; }
-        }
-        
-        .icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-            color: #0bcbd4;
-            text-shadow: 0 0 15px rgba(11, 203, 212, 0.7);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        .blinking-text {
-            font-size: 28px;
-            font-weight: bold;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            animation: blink 3s infinite;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-            padding: 0 10px;
-        }
-        
-        @keyframes blink {
-            0%, 100% {
-                color: #00ffaa;
-                text-shadow: 0 0 15px rgba(0, 255, 170, 0.8);
-            }
-            50% {
-                color: #00ccff;
-                text-shadow: 0 0 15px rgba(0, 204, 255, 0.8);
-            }
-        }
-        
-        .message {
-            font-size: 18px;
-            color: #e0f7fa;
-            line-height: 1.8;
-            margin-bottom: 25px;
-            text-shadow: 0 0 8px rgba(224, 247, 250, 0.5);
-            padding: 0 5px;
-        }
-        
-        .progress-container {
-            width: 100%;
-            height: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-            margin: 25px 0;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
-        }
-        
-        .progress-bar {
-            height: 100%;
-            width: 65%;
-            background: linear-gradient(90deg, #00ffaa, #00ccff);
-            border-radius: 8px;
-            animation: progress 2s infinite alternate;
-        }
-        
-        @keyframes progress {
-            0% { width: 60%; }
-            100% { width: 70%; }
-        }
-        
-        .dots {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        
-        .dot {
-            width: 16px;
-            height: 16px;
-            margin: 0 8px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #00ffaa, #00ccff);
-            animation: bounce 1.5s infinite ease-in-out;
-            box-shadow: 0 0 10px rgba(0, 204, 255, 0.7);
-        }
-        
-        .dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        
-        .dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-15px);
-            }
-        }
-        
-        .contact {
-            margin-top: 30px;
-            color: #b2ebf2;
-            font-size: 16px;
-        }
-        
-        .social {
-            margin-top: 15px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-        
-        .social a {
-            color: #00ccff;
-            font-size: 20px;
-            transition: all 0.3s;
-        }
-        
-        .social a:hover {
-            color: #00ffaa;
-            transform: scale(1.2);
-        }
-        
-        /* بهبود برای صفحه‌نمایی عمودی */
-        @media (max-height: 700px) {
-            .container {
-                padding: 20px 15px;
-            }
-            
-            .icon {
-                font-size: 50px;
-                margin-bottom: 15px;
-            }
-            
-            .blinking-text {
                 font-size: 24px;
-                margin-bottom: 15px;
-            }
-            
-            .message {
-                font-size: 16px;
-                margin-bottom: 20px;
-            }
-            
-            .progress-container {
-                margin: 15px 0;
-            }
-            
-            .contact {
-                margin-top: 20px;
-            }
-        }
-        
-        /* بهبود برای صفحه‌نمایی افقی */
-        @media (max-width: 768px) and (orientation: landscape) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                max-width: 90%;
-                padding: 20px 15px;
-            }
-            
-            .icon {
-                font-size: 40px;
-                margin-bottom: 15px;
-            }
-            
-            .blinking-text {
-                font-size: 22px;
-                margin-bottom: 15px;
-            }
-            
-            .message {
-                font-size: 16px;
-                margin-bottom: 15px;
-            }
-            
-            .progress-container {
-                height: 14px;
-                margin: 15px 0;
-            }
-            
-            .dot {
-                width: 14px;
-                height: 14px;
-            }
-        }
-        
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        
-        .particle {
-            position: absolute;
-            background: linear-gradient(45deg, #00ffaa, #00ccff);
-            border-radius: 50%;
-            opacity: 0.5;
-            animation: float 10s infinite linear;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.5;
-            }
-            90% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
             }
         }
     </style>
 </head>
 <body>
-    <div class="particles" id="particles"></div>
-    
     <div class="container">
-        <div class="icon">
-            <i class="fas fa-tools"></i>
-        </div>
+        <div class="icon">🔧</div>
         
         <div class="blinking-text">
             ربات در دست تعمیر<br>
             لطفا شکیبا باشید
         </div>
-        
-        <div class="message">
-            تیم فنی ما در حال به‌روزرسانی و بهبود سرویس ربات می‌باشد.<br>
-            این فرآیند ممکن است چند ساعت به طول بیانجامد.
-        </div>
-        
-        <div class="progress-container">
-            <div class="progress-bar"></div>
-        </div>
-        
-        <div class="dots">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-        </div>
-        
-        <div class="contact">
-            برای اطلاعات بیشتر با پشتیبانی تماس بگیرید
-        </div>
-        
-        <div class="social">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-telegram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fas fa-envelope"></i></a>
-        </div>
     </div>
-
-    <script>
-        // ایجاد ذرات شناور
-        document.addEventListener('DOMContentLoaded', function() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 20; // کاهش تعداد ذرات برای عملکرد بهتر در موبایل
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                const size = Math.random() * 15 + 5;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                
-                particle.style.animationDuration = `${Math.random() * 15 + 5}s`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
-        });
-    </script>
 </body>
 </html>
