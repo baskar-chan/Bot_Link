@@ -3,133 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ربات در دست تعمیر</title>
+    <title>Bot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #ff7f00;
+            --primary-light: #ffa64d;
+            --primary-dark: #e67300;
+            --secondary-color: #ffffff;
+            --accent-color: #ffb366;
+            --text-color: #333333;
+            --light-color: #f8f9fa;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 127, 0, 0.2);
+            --glass-shadow: rgba(255, 127, 0, 0.15);
+            --placeholder-color: #a0a0a0;
+            --success-color: #4caf50;
+            --error-color: #f44336;
+            --warning-color: #ff9800;
+        }
+        
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
         
         body {
-            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
-            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffd9b3 0%, #ffb366 100%);
+            margin: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-            padding: 15px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            color: var(--text-color);
         }
         
         .container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: 0 12px 40px var(--glass-shadow);
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid var(--glass-border);
+        }
+        
+        .header {
             text-align: center;
-            width: 100%;
-            max-width: 95%;
-            padding: 40px 20px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(7, 94, 84, 0.1), rgba(10, 186, 181, 0.2));
-            transform: rotate(-45deg);
-            z-index: -1;
-            animation: shine 6s infinite;
-        }
-        
-        @keyframes shine {
-            0% { left: -100%; }
-            20% { left: 100%; }
-            100% { left: 100%; }
-        }
-        
-        .icon {
-            font-size: 60px;
             margin-bottom: 30px;
-            color: #0bcbd4;
-            text-shadow: 0 0 15px rgba(11, 203, 212, 0.7);
-            animation: pulse 2s infinite;
+            position: relative;
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        .blinking-text {
+        .header h1 {
+            color: var(--primary-dark);
+            margin-bottom: 15px;
             font-size: 32px;
-            font-weight: bold;
-            line-height: 1.8;
-            animation: blink 3s infinite;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
         }
         
-        @keyframes blink {
-            0%, 100% {
-                color: #00ffaa;
-                text-shadow: 0 0 15px rgba(0, 255, 170, 0.8);
-            }
-            50% {
-                color: #00ccff;
-                text-shadow: 0 0 15px rgba(0, 204, 255, 0.8);
-            }
+        .header::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-light), var(--primary-dark));
+            margin: 15px auto;
+            border-radius: 2px;
         }
         
-        /* بهبود برای صفحه‌نمایی عمودی */
-        @media (max-height: 700px) {
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 16px;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #ffd9b3;
+            border-radius: 12px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s;
+            font-family: inherit;
+            background-color: var(--secondary-color);
+        }
+        
+        input[type="text"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 127, 0, 0.2);
+        }
+        
+        input[type="text"]::placeholder {
+            color: var(--placeholder-color);
+            opacity: 0.8;
+        }
+        
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 127, 0, 0.3);
+        }
+        
+        button:hover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 127, 0, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 12px;
+            background-color: var(--light-color);
+            display: none;
+            animation: fadeIn 0.5s ease;
+            border: 1px solid #ffd9b3;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .success {
+            display: block;
+            border-right: 5px solid var(--success-color);
+        }
+        
+        .error {
+            display: block;
+            border-right: 5px solid var(--error-color);
+            background-color: #ffeeee;
+        }
+        
+        .warning {
+            display: block;
+            border-right: 5px solid var(--warning-color);
+            background-color: #fff6e6;
+        }
+        
+        .glass-link {
+            word-break: break-all;
+            padding: 15px;
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 16px;
+            border: 1px dashed var(--primary-light);
+            direction: ltr;
+            text-align: left;
+            color: var(--primary-dark);
+        }
+        
+        .copy-btn {
+            margin-top: 15px;
+            background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--primary-dark);
+            font-size: 14px;
+        }
+        
+        .more-tools-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-light) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(255, 127, 0, 0.25);
+        }
+        
+        .more-tools-btn:hover {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent-color) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 127, 0, 0.35);
+        }
+        
+        .more-tools-btn i {
+            margin-left: 8px;
+        }
+        
+        @media (max-width: 768px) {
             .container {
-                padding: 30px 15px;
+                padding: 20px;
             }
             
-            .icon {
-                font-size: 50px;
-                margin-bottom: 20px;
+            .header h1 {
+                font-size: 26px;
             }
             
-            .blinking-text {
-                font-size: 28px;
-            }
-        }
-        
-        /* بهبود برای صفحه‌نمایی افقی */
-        @media (max-width: 768px) and (orientation: landscape) {
-            .container {
-                max-width: 90%;
-                padding: 25px 15px;
-            }
-            
-            .icon {
-                font-size: 40px;
-                margin-bottom: 15px;
-            }
-            
-            .blinking-text {
-                font-size: 24px;
+            input[type="text"] {
+                padding: 12px 12px 12px 40px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="icon">🔧</div>
+        <div class="header">
+            <h1>ابزارک لینک‌ حبابی ایتا</h1>
+        </div>
         
-        <div class="blinking-text">
-            ربات در دست تعمیر<br>
-            لطفا شکیبا باشید
+        <div class="form-group">
+            <label for="public-link">لینک :</label>
+            <div class="input-with-icon">
+                <i class="fas fa-link"></i>
+                <input type="text" id="public-link" placeholder="https://eitaa.com/Ariya_academy یا https://eitaa.com/joinchat/ABC123">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="btn-text">متن روی دکمه :</label>
+            <div class="input-with-icon">
+                <i class="fas fa-font"></i>
+                <input type="text" id="btn-text" placeholder="مثلا دانلود فایل">
+            </div>
+        </div>
+        
+        <button id="generate-btn" onclick="generateGlassLink()">
+            <i class="fas fa-magic"></i> ساخت لینک حبابی
+        </button>
+        
+        <div id="result" class="result"></div>
+        
+        <a href="https://eitaa.com/Ariya_academy" class="more-tools-btn" target="_blank">
+            <i class="fas fa-plus"></i> ابزارک های بیشتر
+        </a>
+
+        <div class="footer">
+            <p>ابزار ساخت لینک شیشه‌ای/ حبابی ایتا</p>
         </div>
     </div>
+
+    <script>
+        // تابع برای ساخت لینک شیشه ای
+        function generateGlassLink() {
+            const publicLink = document.getElementById('public-link').value.trim();
+            const btnText = document.getElementById('btn-text').value.trim();
+            const resultDiv = document.getElementById('result');
+            
+            // پاک کردن نتیجه قبلی
+            resultDiv.className = 'result';
+            resultDiv.innerHTML = '';
+            
+            // بررسی اینکه فیلدها خالی نباشند
+            if (!publicLink || !btnText) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = '<p><i class="fas fa-exclamation-circle"></i> لطفاً هر دو فیلد را پر کنید.</p>';
+                return;
+            }
+            
+            // بررسی اینکه لینک با http یا https شروع شود
+            if (!publicLink.startsWith('http://') && !publicLink.startsWith('https://')) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = '<p><i class="fas fa-exclamation-circle"></i> لینک باید با http:// یا https:// شروع شود.</p>';
+                return;
+            }
+            
+            // بررسی اینکه لینک مربوط به ایتا است
+            if (!publicLink.includes('eitaa.com')) {
+                resultDiv.className = 'result warning';
+                resultDiv.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i> این لینک مربوط به ایتا نیست. لینک باید از دامنه eitaa.com باشد.</p>';
+            }
+            
+            // تبدیل فاصله به نقطه در متن دکمه
+            const transformedText = btnText.replace(/\s+/g, '.');
+            
+            // ساخت لینک حبابی - افزودن ?_app?btn= به انتهای لینک
+            const separator = publicLink.includes('?') ? '&' : '?';
+            const glassLink = `${publicLink}${separator}_app?btn=${transformedText}`;
+            
+            // نمایش نتیجه
+            resultDiv.className = 'result success';
+            resultDiv.innerHTML = `
+                <p><i class="fas fa-check-circle"></i> لینک حبابی با موفقیت ساخته شد:</p>
+                <div class="glass-link">${glassLink}</div>
+                <button class="copy-btn" onclick="copyToClipboard('${glassLink}')">
+                    <i class="fas fa-copy"></i> کپی لینک
+                </button>
+            `;
+        }
+        
+        // تابع برای کپی کردن لینک به کلیپ بورد
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            
+            // نمایش پیام موفقیت
+            const resultDiv = document.getElementById('result');
+            const successMsg = document.createElement('div');
+            successMsg.innerHTML = '<p style="color: var(--success-color); margin-top: 10px;"><i class="fas fa-check"></i> لینک با موفقیت کپی شد!</p>';
+            resultDiv.appendChild(successMsg);
+            
+            // حذف پیام پس از 3 ثانیه
+            setTimeout(() => {
+                successMsg.remove();
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
