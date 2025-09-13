@@ -1,17 +1,134 @@
-body, html {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ربات در دست تعمیر</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f8ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%);
+        }
 
-.blinking-text {
-    animation: blink 2s infinite;
-}
+        .container {
+            text-align: center;
+            padding: 30px;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            max-width: 80%;
+            backdrop-filter: blur(5px);
+        }
 
-@keyframes blink {
-    0% { color: green; }
-    50% { color: blue; }
-    100% { color: green; }
-}
+        .blinking-text {
+            font-size: 2.8rem;
+            font-weight: bold;
+            animation: blink 2s infinite;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            line-height: 1.6;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                color: #00c853; /* سبز */
+                text-shadow: 0 0 10px rgba(0, 200, 83, 0.5);
+            }
+            50% {
+                color: #2979ff; /* آبی */
+                text-shadow: 0 0 10px rgba(41, 121, 255, 0.5);
+            }
+        }
+
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .message {
+            font-size: 1.2rem;
+            margin-top: 25px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .dot {
+            width: 15px;
+            height: 15px;
+            margin: 0 8px;
+            border-radius: 50%;
+            background-color: #4fc3f7;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+            background-color: #29b6f6;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+            background-color: #0288d1;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blinking-text {
+                font-size: 2rem;
+            }
+            .icon {
+                font-size: 3rem;
+            }
+            .message {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🔧</div>
+        <div class="blinking-text">ربات در دست تعمیر<br>لطفا شکیبا باشید</div>
+        <div class="dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="message">
+            تیم فنی ما در حال به روزرسانی و بهبود سرویس است<br>
+            به زودی با امکانات بهتر در خدمت شما خواهیم بود
+        </div>
+    </div>
+</body>
+</html>
